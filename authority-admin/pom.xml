@@ -12,4 +12,11 @@
     <artifactId>authority-admin</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.gsd</groupId>
+            <artifactId>authority-framework</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
