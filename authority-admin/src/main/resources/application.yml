@@ -1,6 +1,10 @@
+server:
+  port: 8088
+
 mybatis:
   type-aliases-package: com.gsd.**.domain
   mapper-locations: classpath*:mapper/**/*Mapper.xml
 spring:
   profiles:
     active: druid
+
