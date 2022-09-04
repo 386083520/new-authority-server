@@ -30,10 +30,12 @@ public class CaptchaController {
         String uuid = IdUtils.simpleUUID();
         String captchaType = "math";
         BufferedImage image = null;
+        String capStr = null,code = null;
         if("math".equals(captchaType)) {
             String capText = captchaProducerMath.createText();
-            System.out.println(capText);
-            image = captchaProducerMath.createImage(capText);
+            capStr = capText.substring(0, capText.lastIndexOf("@"));
+            code = capText.substring(capText.lastIndexOf("@") + 1);
+            image = captchaProducerMath.createImage(capStr);
         }
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {

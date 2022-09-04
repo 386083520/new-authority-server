@@ -26,6 +26,7 @@ public class CaptchaConfig {
         properties.setProperty(KAPTCHA_IMAGE_WIDTH, "160");
         properties.setProperty(KAPTCHA_IMAGE_HEIGHT, "60");
         properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_SIZE, "35");
+        properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL, "com.gsd.framework.config.KaptchaTextCreator");
         properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "3");
         properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_LENGTH, "6");
         properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_NAMES, "Arial,Courier");
