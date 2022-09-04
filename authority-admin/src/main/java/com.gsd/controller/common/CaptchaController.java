@@ -1,7 +1,9 @@
 package com.gsd.controller.common;
 
 import com.google.code.kaptcha.Producer;
+import com.gsd.common.constant.Constants;
 import com.gsd.common.core.domain.AjaxResult;
+import com.gsd.common.core.redis.RedisCache;
 import com.gsd.common.utils.uuid.IdUtils;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,15 @@ import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class CaptchaController {
     @Resource(name = "captchaProducerMath")
     private Producer captchaProducerMath;
+
+    @Autowired
+    private RedisCache redisCache;
 
 
     @GetMapping("/captchaImage")
@@ -28,6 +34,7 @@ public class CaptchaController {
             return ajax;
         }
         String uuid = IdUtils.simpleUUID();
+        String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
         String captchaType = "math";
         BufferedImage image = null;
         String capStr = null,code = null;
@@ -37,6 +44,7 @@ public class CaptchaController {
             code = capText.substring(capText.lastIndexOf("@") + 1);
             image = captchaProducerMath.createImage(capStr);
         }
+        redisCache.setCacheObject(verifyKey, code, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {
             ImageIO.write(image, "jpg", os);
