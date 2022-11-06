@@ -1,11 +1,17 @@
 package com.gsd.common.core.domain.model;
 
+import com.gsd.common.core.domain.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 public class LoginUser implements UserDetails{
+    private SysUser user;
+
+    public LoginUser(SysUser user) {
+        this.user = user;
+    }
 
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -13,11 +19,11 @@ public class LoginUser implements UserDetails{
     }
 
     public String getPassword() {
-        return "{noop}gsd";
+        return user.getPassword();
     }
 
     public String getUsername() {
-        return "gsd";
+        return user.getUserName();
     }
 
     public boolean isAccountNonExpired() {

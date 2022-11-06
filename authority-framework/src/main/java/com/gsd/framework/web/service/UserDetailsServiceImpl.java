@@ -17,11 +17,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUser user = userService.selectUserByUserName(username);
-        System.out.println(user);
-        return creatLoginUser();
+        return creatLoginUser(user);
     }
 
-    public UserDetails creatLoginUser() {
-        return new LoginUser();
+    public UserDetails creatLoginUser(SysUser user) {
+        return new LoginUser(user);
     }
 }
