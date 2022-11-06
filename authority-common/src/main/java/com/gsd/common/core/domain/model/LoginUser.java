@@ -8,6 +8,7 @@ import java.util.Collection;
 
 public class LoginUser implements UserDetails{
     private SysUser user;
+    private String token;
 
     public LoginUser(SysUser user) {
         this.user = user;
@@ -40,5 +41,13 @@ public class LoginUser implements UserDetails{
 
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

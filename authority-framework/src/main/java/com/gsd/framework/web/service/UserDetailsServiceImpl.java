@@ -27,10 +27,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         } else if(UserStatus.DISABLE.getCode().equals(user.getStatus())) {
             throw new ServiceException("对不起，您的账号：" + username + "已被停用");
         }
-        return creatLoginUser(user);
+        return createLoginUser(user);
     }
 
-    public UserDetails creatLoginUser(SysUser user) {
+    public UserDetails createLoginUser(SysUser user) {
         return new LoginUser(user);
     }
 }

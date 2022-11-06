@@ -9,4 +9,6 @@ public class Constants {
     public static final Integer CAPTCHA_EXPIRATION = 2;
 
     public static final String TOKEN = "token";
+
+    public static final String LOGIN_USER_KEY = "login_user_key";
 }

@@ -1,6 +1,7 @@
 package com.gsd.framework.web.service;
 
 import com.gsd.common.constant.Constants;
+import com.gsd.common.core.domain.model.LoginUser;
 import com.gsd.common.core.redis.RedisCache;
 import com.gsd.common.exception.ServiceException;
 import com.gsd.common.utils.StringUtils;
@@ -21,10 +22,14 @@ public class SysLoginService {
     @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private TokenService tokenService;
+
     public String login(String username, String password, String code, String uuid) {
         validateCaptcha(username, code, uuid);
+        Authentication authentication = null;
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         }catch (Exception e) {
             if(e instanceof BadCredentialsException) {
                 throw new ServiceException(e.getMessage());
@@ -32,7 +37,8 @@ public class SysLoginService {
                 throw new ServiceException(e.getMessage());
             }
         }
-        return "123";
+        LoginUser loginUser = (LoginUser)authentication.getPrincipal();
+        return tokenService.createToken(loginUser);
     }
 
     public void validateCaptcha(String username, String code, String uuid) {
