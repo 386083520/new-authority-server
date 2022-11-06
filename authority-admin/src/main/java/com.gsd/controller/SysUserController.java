@@ -1,7 +1,7 @@
 package com.gsd.controller;
 
 
-import com.gsd.system.domain.SysUser;
+import com.gsd.common.core.domain.entity.SysUser;
 import com.gsd.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

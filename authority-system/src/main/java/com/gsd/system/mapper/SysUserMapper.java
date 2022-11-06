@@ -1,7 +1,7 @@
 package com.gsd.system.mapper;
 
 
-import com.gsd.system.domain.SysUser;
+import com.gsd.common.core.domain.entity.SysUser;
 
 import java.util.List;
 
@@ -21,4 +21,6 @@ public interface SysUserMapper
      * @return 用户信息集合
      */
     public List<SysUser> selectSysUserList(SysUser sysUser);
+
+    public SysUser selectUserByUserName(String userName);
 }

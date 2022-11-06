@@ -1,7 +1,7 @@
 package com.gsd.system.service.impl;
 
 
-import com.gsd.system.domain.SysUser;
+import com.gsd.common.core.domain.entity.SysUser;
 import com.gsd.system.mapper.SysUserMapper;
 import com.gsd.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +30,9 @@ public class SysUserServiceImpl implements ISysUserService
     public List<SysUser> selectSysUserList(SysUser sysUser)
     {
         return sysUserMapper.selectSysUserList(sysUser);
+    }
+
+    public SysUser selectUserByUserName(String username) {
+        return sysUserMapper.selectUserByUserName(username);
     }
 }

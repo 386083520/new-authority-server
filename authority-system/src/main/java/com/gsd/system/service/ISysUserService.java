@@ -1,6 +1,6 @@
 package com.gsd.system.service;
 
-import com.gsd.system.domain.SysUser;
+import com.gsd.common.core.domain.entity.SysUser;
 
 import java.util.List;
 
@@ -20,4 +20,6 @@ public interface ISysUserService
      * @return 用户信息集合
      */
     public List<SysUser> selectSysUserList(SysUser sysUser);
+
+    public SysUser selectUserByUserName(String username);
 }
