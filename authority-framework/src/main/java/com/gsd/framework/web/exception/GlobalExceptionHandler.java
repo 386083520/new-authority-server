@@ -2,6 +2,8 @@ package com.gsd.framework.web.exception;
 
 import com.gsd.common.constant.HttpStatus;
 import com.gsd.common.core.domain.AjaxResult;
+import com.gsd.common.exception.ServiceException;
+import com.gsd.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,5 +19,11 @@ public class GlobalExceptionHandler {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',权限校验失败'{}'", requestURI, e.getMessage());
         return AjaxResult.error(e.getMessage());
+    }
+
+    @ExceptionHandler(ServiceException.class)
+    public AjaxResult handleServiceException(ServiceException e, HttpServletRequest request) {
+        Integer code = e.getCode();
+        return StringUtils.isNotNull(code) ? AjaxResult.error(code, e.getMessage()): AjaxResult.error(e.getMessage());
     }
 }
