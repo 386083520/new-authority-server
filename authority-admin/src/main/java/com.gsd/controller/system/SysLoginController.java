@@ -33,7 +33,7 @@ public class SysLoginController {
 
     @GetMapping("/getInfo")
     public AjaxResult getInfo(HttpServletRequest request) {
-        LoginUser user = securityUtils.getLoginUser(request);
+        SysUser user = securityUtils.getLoginUser().getUser();
         AjaxResult ajax = AjaxResult.success();
         ajax.put("user", user);
         ajax.put("roles", null);

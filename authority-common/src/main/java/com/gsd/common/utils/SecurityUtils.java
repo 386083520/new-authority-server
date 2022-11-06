@@ -1,11 +1,15 @@
 package com.gsd.common.utils;
 
 import com.gsd.common.constant.Constants;
+import com.gsd.common.constant.HttpStatus;
 import com.gsd.common.core.domain.model.LoginUser;
 import com.gsd.common.core.redis.RedisCache;
+import com.gsd.common.exception.ServiceException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +23,8 @@ public class SecurityUtils {
     @Autowired
     private RedisCache redisCache;
 
-    public LoginUser getLoginUser(HttpServletRequest request) {
-        String token = getToken(request);
+    public LoginUser getLoginUser() {
+        /*String token = getToken(request);
         if(StringUtils.isNotEmpty(token)) {
             Claims claims = parseToken(token);
             String uuid = (String)claims.get(Constants.LOGIN_USER_KEY);
@@ -28,7 +32,16 @@ public class SecurityUtils {
             LoginUser user = redisCache.getCacheObject(userKey);
             return user;
         }
-        return null;
+        return null;*/
+       try {
+           return (LoginUser) getAuthentication().getPrincipal();
+       } catch (Exception e) {
+           throw new ServiceException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
+       }
+    }
+
+    public static Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     private String getToken(HttpServletRequest request) {

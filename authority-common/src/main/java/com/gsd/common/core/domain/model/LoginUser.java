@@ -50,4 +50,8 @@ public class LoginUser implements UserDetails{
     public void setToken(String token) {
         this.token = token;
     }
+
+    public SysUser getUser() {
+        return user;
+    }
 }
