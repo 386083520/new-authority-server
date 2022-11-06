@@ -7,4 +7,7 @@ public class StringUtils {
     public static boolean isNotNull(Object object) {
         return !isNull(object);
     }
+    public static <T> T nvl(T value, T defaultValue) {
+        return value != null ? value : defaultValue;
+    }
 }
