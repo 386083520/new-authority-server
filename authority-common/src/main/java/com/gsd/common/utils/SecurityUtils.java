@@ -16,23 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class SecurityUtils {
-    private String header = "Authorization";
 
-    private String secret = "gdsafdasgdsfdasgfhgdsgf";
-
-    @Autowired
-    private RedisCache redisCache;
 
     public LoginUser getLoginUser() {
-        /*String token = getToken(request);
-        if(StringUtils.isNotEmpty(token)) {
-            Claims claims = parseToken(token);
-            String uuid = (String)claims.get(Constants.LOGIN_USER_KEY);
-            String userKey = getTokenKey(uuid);
-            LoginUser user = redisCache.getCacheObject(userKey);
-            return user;
-        }
-        return null;*/
        try {
            return (LoginUser) getAuthentication().getPrincipal();
        } catch (Exception e) {
@@ -42,21 +28,5 @@ public class SecurityUtils {
 
     public static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
-    }
-
-    private String getToken(HttpServletRequest request) {
-        String token = request.getHeader(this.header);
-        if(StringUtils.isNotEmpty(token) && token.startsWith(Constants.TOKEN_PREFIX)) {
-            token = token.replace(Constants.TOKEN_PREFIX, "");
-        }
-        return token;
-    }
-
-    private Claims parseToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-    }
-
-    private String getTokenKey(String uuid) {
-        return Constants.LOGIN_TOKEN_KEY + uuid;
     }
 }

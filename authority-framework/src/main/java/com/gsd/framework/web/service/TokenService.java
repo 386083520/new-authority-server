@@ -3,12 +3,15 @@ package com.gsd.framework.web.service;
 import com.gsd.common.constant.Constants;
 import com.gsd.common.core.domain.model.LoginUser;
 import com.gsd.common.core.redis.RedisCache;
+import com.gsd.common.utils.StringUtils;
 import com.gsd.common.utils.uuid.IdUtils;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -17,9 +20,23 @@ import java.util.concurrent.TimeUnit;
 public class TokenService {
     private String secret = "gdsafdasgdsfdasgfhgdsgf";
     private int expireTime = 30;
+    private String header = "Authorization";
 
     @Autowired
     private RedisCache redisCache;
+
+
+    public LoginUser getLoginUser(HttpServletRequest request) {
+        String token = getToken(request);
+        if(StringUtils.isNotEmpty(token)) {
+            Claims claims = parseToken(token);
+            String uuid = (String)claims.get(Constants.LOGIN_USER_KEY);
+            String userKey = getTokenKey(uuid);
+            LoginUser user = redisCache.getCacheObject(userKey);
+            return user;
+        }
+        return null;
+    }
 
     public String createToken(LoginUser loginUser) {
         String token = IdUtils.fastUUID();
@@ -42,5 +59,17 @@ public class TokenService {
 
     private String getTokenKey(String uuid) {
         return Constants.LOGIN_TOKEN_KEY + uuid;
+    }
+
+    private String getToken(HttpServletRequest request) {
+        String token = request.getHeader(header);
+        if(StringUtils.isNotEmpty(token) && token.startsWith(Constants.TOKEN_PREFIX)) {
+            token = token.replace(Constants.TOKEN_PREFIX, "");
+        }
+        return token;
+    }
+
+    private Claims parseToken(String token) {
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 }
