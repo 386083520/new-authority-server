@@ -23,9 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         if(StringUtils.isNull(user)) {
             throw new ServiceException("登陆用户：" + username + "不存在");
         } else if(UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
-            throw new ServiceException("对不去，您的账号：" + username + "已被删除");
+            throw new ServiceException("对不起，您的账号：" + username + "已被删除");
         } else if(UserStatus.DISABLE.getCode().equals(user.getStatus())) {
-            throw new ServiceException("对不去，您的账号：" + username + "已被停用");
+            throw new ServiceException("对不起，您的账号：" + username + "已被停用");
         }
         return creatLoginUser(user);
     }

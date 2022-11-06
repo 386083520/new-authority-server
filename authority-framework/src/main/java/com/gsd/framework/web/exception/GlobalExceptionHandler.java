@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public AjaxResult handleException(Exception e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',权限校验失败'{}'", requestURI, e.getMessage());
+        log.error("请求地址'{}',发生了未知异常.'{}'", requestURI, e);
         return AjaxResult.error(e.getMessage());
     }
 
