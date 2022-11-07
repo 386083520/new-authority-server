@@ -22,4 +22,14 @@ public class SysPermissionService {
         }
         return perms;
     }
+
+    public Set<String> getRolePermission(SysUser user) {
+        Set<String> roles = new HashSet<String>();
+        if(user.isAdmin()) {
+            roles.add("admin");
+        }else {
+            roles.addAll(menuService.selectMenuPermsByUserId(user.getUserId()));
+        }
+        return roles;
+    }
 }
