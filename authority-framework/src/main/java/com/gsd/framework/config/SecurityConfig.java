@@ -27,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         httpSecurity
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/captchaImage", "/login").anonymous();
+                .antMatchers("/captchaImage", "/login").anonymous()
+                .anyRequest().authenticated();
         httpSecurity.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
