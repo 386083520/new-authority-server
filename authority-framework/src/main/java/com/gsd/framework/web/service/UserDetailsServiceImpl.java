@@ -18,6 +18,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
     private ISysUserService userService;
 
+    @Autowired
+    private SysPermissionService sysPermissionService;
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUser user = userService.selectUserByUserName(username);
         if(StringUtils.isNull(user)) {
@@ -31,6 +34,6 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     }
 
     public UserDetails createLoginUser(SysUser user) {
-        return new LoginUser(user);
+        return new LoginUser(user, sysPermissionService.getMenuPermission(user));
     }
 }
