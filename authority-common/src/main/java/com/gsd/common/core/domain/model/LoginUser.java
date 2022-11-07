@@ -5,13 +5,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 public class LoginUser implements UserDetails{
     private SysUser user;
     private String token;
+    private Set<String> permissions;
 
-    public LoginUser(SysUser user) {
+    public LoginUser(SysUser user, Set<String> permissions) {
         this.user = user;
+        this.permissions = permissions;
     }
 
 
