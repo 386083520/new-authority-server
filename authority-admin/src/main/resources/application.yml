@@ -14,3 +14,9 @@ spring:
     timeout: 10s
     database: 0
 
+
+token:
+  header: Authorization
+  secret: gdsfdsagdsafadsf
+  expireTime: 30
+
