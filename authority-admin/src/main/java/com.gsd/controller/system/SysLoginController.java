@@ -37,7 +37,7 @@ public class SysLoginController {
     }
 
     @GetMapping("/getInfo")
-    public AjaxResult getInfo(HttpServletRequest request) {
+    public AjaxResult getInfo() {
         SysUser user = securityUtils.getLoginUser().getUser();
         Set<String> permissions = permissionService.getMenuPermission(user);
         AjaxResult ajax = AjaxResult.success();
