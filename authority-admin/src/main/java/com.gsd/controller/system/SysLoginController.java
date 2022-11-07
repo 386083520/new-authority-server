@@ -8,6 +8,7 @@ import com.gsd.common.core.domain.model.LoginUser;
 import com.gsd.common.utils.SecurityUtils;
 import com.gsd.framework.web.service.SysLoginService;
 import com.gsd.framework.web.service.SysPermissionService;
+import com.gsd.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +26,6 @@ public class SysLoginController {
     @Autowired
     private SysPermissionService permissionService;
 
-    @Autowired
-    private SecurityUtils securityUtils;
 
     @PostMapping("/login")
     public AjaxResult login(@RequestBody LoginBody loginBody) {
@@ -38,11 +37,12 @@ public class SysLoginController {
 
     @GetMapping("/getInfo")
     public AjaxResult getInfo() {
-        SysUser user = securityUtils.getLoginUser().getUser();
+        SysUser user = SecurityUtils.getLoginUser().getUser();
         Set<String> permissions = permissionService.getMenuPermission(user);
+        Set<String> roles = permissionService.getRolePermission(user);
         AjaxResult ajax = AjaxResult.success();
         ajax.put("user", user);
-        ajax.put("roles", null);
+        ajax.put("roles", roles);
         ajax.put("permissions", permissions);
         return ajax;
     }

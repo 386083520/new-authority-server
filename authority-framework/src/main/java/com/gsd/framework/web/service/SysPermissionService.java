@@ -2,6 +2,7 @@ package com.gsd.framework.web.service;
 
 import com.gsd.common.core.domain.entity.SysUser;
 import com.gsd.system.service.ISysMenuService;
+import com.gsd.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,9 @@ import java.util.Set;
 public class SysPermissionService {
     @Autowired
     private ISysMenuService menuService;
+
+    @Autowired
+    private ISysRoleService roleService;
 
     public Set<String> getMenuPermission(SysUser user) {
         Set<String> perms = new HashSet<String>();
@@ -28,7 +32,7 @@ public class SysPermissionService {
         if(user.isAdmin()) {
             roles.add("admin");
         }else {
-            roles.addAll(menuService.selectMenuPermsByUserId(user.getUserId()));
+            roles.addAll(roleService.selectRolePermissionByUserId(user.getUserId()));
         }
         return roles;
     }

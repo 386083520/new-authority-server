@@ -1,5 +1,6 @@
 package com.gsd.system.service.impl;
 
+import com.gsd.common.core.domain.entity.SysRole;
 import com.gsd.common.utils.StringUtils;
 import com.gsd.system.mapper.SysRoleMapper;
 import com.gsd.system.service.ISysRoleService;
@@ -17,11 +18,11 @@ public class SysRoleServiceImpl implements ISysRoleService{
     private SysRoleMapper roleMapper;
 
     public Set<String> selectRolePermissionByUserId(Long userId) {
-        List<String> perms = roleMapper.selectRolePermissionByUserId(userId);
+        List<SysRole> perms = roleMapper.selectRolePermissionByUserId(userId);
         Set<String> permsSet = new HashSet<String>();
-        for (String perm: perms) {
-            if(StringUtils.isNotEmpty(perm)) {
-                permsSet.addAll(Arrays.asList(perm.trim().split(",")));
+        for (SysRole perm: perms) {
+            if(StringUtils.isNotNull(perm)) {
+                permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(",")));
             }
         }
         return permsSet;

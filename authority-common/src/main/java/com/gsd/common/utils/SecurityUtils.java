@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SecurityUtils {
 
 
-    public LoginUser getLoginUser() {
+    public static LoginUser getLoginUser() {
        try {
            return (LoginUser) getAuthentication().getPrincipal();
        } catch (Exception e) {
