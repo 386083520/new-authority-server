@@ -36,6 +36,10 @@
     </select>
 
     <select id="selectMenuTreeAll" resultMap="SysMenuResult">
-        SELECT * FROM sys_menu
+        select menu_id,parent_id,menu_name,path,component,
+        `query`,visible,status,ifnull(perms, '') as perms,is_frame,is_cache,menu_type,icon,order_num,create_time
+        from sys_menu
+        where menu_type in ('M','C') and status = 0
+        order by parent_id,order_num
     </select>
 </mapper>
