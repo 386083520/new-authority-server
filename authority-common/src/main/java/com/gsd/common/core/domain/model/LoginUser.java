@@ -14,8 +14,10 @@ public class LoginUser implements UserDetails{
     private SysUser user;
     private String token;
     private Set<String> permissions;
+    private Long userId;
 
-    public LoginUser(SysUser user, Set<String> permissions) {
+    public LoginUser(Long userId, SysUser user, Set<String> permissions) {
+        this.userId = userId;
         this.user = user;
         this.permissions = permissions;
     }
@@ -63,5 +65,9 @@ public class LoginUser implements UserDetails{
 
     public SysUser getUser() {
         return user;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }

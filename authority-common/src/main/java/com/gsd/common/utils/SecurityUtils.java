@@ -26,6 +26,10 @@ public class SecurityUtils {
        }
     }
 
+    public static Long getUserId() {
+        return getLoginUser().getUserId();
+    }
+
     public static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }

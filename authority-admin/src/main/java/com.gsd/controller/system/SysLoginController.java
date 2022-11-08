@@ -46,4 +46,11 @@ public class SysLoginController {
         ajax.put("permissions", permissions);
         return ajax;
     }
+
+    @GetMapping("getRouters")
+    public AjaxResult getRouters() {
+        Long userId = SecurityUtils.getUserId();
+        System.out.println("gsd" + userId);
+        return AjaxResult.success();
+    }
 }
