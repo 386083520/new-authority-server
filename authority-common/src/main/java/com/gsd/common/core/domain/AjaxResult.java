@@ -28,6 +28,11 @@ public class AjaxResult extends HashMap<String, Object>{
         return AjaxResult.success(msg, null);
     }
 
+    public static AjaxResult success(Object data)
+    {
+        return AjaxResult.success("操作成功", data);
+    }
+
     public static AjaxResult success(String msg, Object data)
     {
         return new AjaxResult(HttpStatus.SUCCESS, msg, data);

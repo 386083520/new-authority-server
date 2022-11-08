@@ -1,5 +1,7 @@
 package com.gsd.system.service.impl;
 
+import com.gsd.common.core.domain.entity.SysMenu;
+import com.gsd.common.utils.SecurityUtils;
 import com.gsd.common.utils.StringUtils;
 import com.gsd.system.mapper.SysMenuMapper;
 import com.gsd.system.service.ISysMenuService;
@@ -25,5 +27,13 @@ public class SysMenuServiceImpl implements ISysMenuService{
             }
         }
         return permsSet;
+    }
+
+    public List<SysMenu> selectMenuTreeByUserId(Long userId) {
+        List<SysMenu> menus = null;
+        if(SecurityUtils.isAdmin(userId)) {
+            menus = menuMapper.selectMenuTreeAll();
+        }
+        return menus;
     }
 }
