@@ -3,6 +3,7 @@ package com.gsd.system.service.impl;
 import com.gsd.common.core.domain.entity.SysMenu;
 import com.gsd.common.utils.SecurityUtils;
 import com.gsd.common.utils.StringUtils;
+import com.gsd.system.domain.RouterVo;
 import com.gsd.system.mapper.SysMenuMapper;
 import com.gsd.system.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,14 @@ public class SysMenuServiceImpl implements ISysMenuService{
             menus = menuMapper.selectMenuTreeAll();
         }
         return getChildPerms(menus, 0);
+    }
+
+    public List<RouterVo> buildMenus(List<SysMenu> menus) {
+        List<RouterVo> routers = new LinkedList<RouterVo>();
+        for(SysMenu menu : menus) {
+
+        }
+        return routers;
     }
 
     public List<SysMenu> getChildPerms(List<SysMenu> list, int parentId) {
