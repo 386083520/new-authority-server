@@ -8,10 +8,7 @@ import com.gsd.system.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class SysMenuServiceImpl implements ISysMenuService{
@@ -34,6 +31,44 @@ public class SysMenuServiceImpl implements ISysMenuService{
         if(SecurityUtils.isAdmin(userId)) {
             menus = menuMapper.selectMenuTreeAll();
         }
-        return menus;
+        return getChildPerms(menus, 0);
+    }
+
+    public List<SysMenu> getChildPerms(List<SysMenu> list, int parentId) {
+        List<SysMenu> returnList = new ArrayList<SysMenu>();
+        for(Iterator<SysMenu> iterator = list.iterator();iterator.hasNext();) {
+            SysMenu t = iterator.next();
+            if(t.getParentId() == parentId) {
+                recursionFn(list, t);
+                returnList.add(t);
+            }
+        }
+        return returnList;
+    }
+
+    private void recursionFn(List<SysMenu> list, SysMenu t) {
+        List<SysMenu> childList = getChildList(list, t);
+        t.setChildren(childList);
+        for(SysMenu tChild: childList) {
+            if(hasChild(list, tChild)) {
+                recursionFn(list, tChild);
+            }
+        }
+    }
+
+    private boolean hasChild(List<SysMenu> list, SysMenu t) {
+        return getChildList(list, t).size() > 0;
+    }
+
+    private List<SysMenu> getChildList(List<SysMenu> list, SysMenu t) {
+        List<SysMenu> tList = new ArrayList<SysMenu>();
+        Iterator<SysMenu> it = list.iterator();
+        while (it.hasNext()) {
+            SysMenu n = (SysMenu)it.next();
+            if(n.getParentId() == t.getMenuId()) {
+                tList.add(n);
+            }
+        }
+        return tList;
     }
 }
