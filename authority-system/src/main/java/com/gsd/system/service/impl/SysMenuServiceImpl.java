@@ -3,6 +3,7 @@ package com.gsd.system.service.impl;
 import com.gsd.common.core.domain.entity.SysMenu;
 import com.gsd.common.utils.SecurityUtils;
 import com.gsd.common.utils.StringUtils;
+import com.gsd.system.domain.MetaVo;
 import com.gsd.system.domain.RouterVo;
 import com.gsd.system.mapper.SysMenuMapper;
 import com.gsd.system.service.ISysMenuService;
@@ -38,7 +39,14 @@ public class SysMenuServiceImpl implements ISysMenuService{
     public List<RouterVo> buildMenus(List<SysMenu> menus) {
         List<RouterVo> routers = new LinkedList<RouterVo>();
         for(SysMenu menu : menus) {
-
+            RouterVo router = new RouterVo();
+            router.setName(getRouteName(menu));
+            router.setPath(getRoutePath(menu));
+            router.setComponent(getComponent(menu));
+            router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));
+            List<SysMenu> cMenus = menu.getChildren();
+            router.setChildren(buildMenus(cMenus));
+            routers.add(router);
         }
         return routers;
     }
@@ -79,5 +87,17 @@ public class SysMenuServiceImpl implements ISysMenuService{
             }
         }
         return tList;
+    }
+
+    public String getRouteName(SysMenu menu) {
+        return menu.getPath();
+    }
+
+    public String getRoutePath(SysMenu menu) {
+        return menu.getPath();
+    }
+
+    public String getComponent(SysMenu menu) {
+        return menu.getComponent();
     }
 }
