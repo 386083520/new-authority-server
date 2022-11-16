@@ -65,7 +65,7 @@ public class TokenService {
 
     private void refreshToken(LoginUser loginUser) {
         String userKey = getTokenKey(loginUser.getToken());
-        redisCache.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
+        redisCache.setCacheObject(userKey, loginUser, expireTime, TimeUnit.SECONDS);
     }
 
     private String getTokenKey(String uuid) {

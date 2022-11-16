@@ -1,6 +1,7 @@
 package com.gsd.framework.config;
 
 import com.gsd.framework.security.filter.JwtAuthenticationTokenFilter;
+import com.gsd.framework.security.handler.AuthenticationEntryPointImpl;
 import com.gsd.framework.security.handler.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private LogoutSuccessHandlerImpl logoutSuccessHandler;
 
+    @Autowired
+    private AuthenticationEntryPointImpl unauthorizedHandler;
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -32,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()

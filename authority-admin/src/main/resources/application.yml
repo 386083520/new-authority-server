@@ -18,5 +18,5 @@ spring:
 token:
   header: Authorization
   secret: gdsfdsagdsafadsf
-  expireTime: 30
+  expireTime: 10
 
