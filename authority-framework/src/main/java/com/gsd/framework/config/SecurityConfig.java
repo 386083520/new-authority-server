@@ -1,6 +1,7 @@
 package com.gsd.framework.config;
 
 import com.gsd.framework.security.filter.JwtAuthenticationTokenFilter;
+import com.gsd.framework.security.handler.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private JwtAuthenticationTokenFilter authenticationFilter;
 
+    @Autowired
+    private LogoutSuccessHandlerImpl logoutSuccessHandler;
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -33,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 .antMatchers("/captchaImage", "/login").anonymous()
                 .anyRequest().authenticated();
+        httpSecurity.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
         httpSecurity.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

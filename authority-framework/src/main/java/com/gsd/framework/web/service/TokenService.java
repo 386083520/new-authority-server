@@ -42,6 +42,13 @@ public class TokenService {
         return null;
     }
 
+    public void delLoginUser(String token) {
+        if(StringUtils.isNotEmpty(token)) {
+            String userKey = getTokenKey(token);
+            redisCache.deleteObject(userKey);
+        }
+    }
+
     public String createToken(LoginUser loginUser) {
         String token = IdUtils.fastUUID();
         loginUser.setToken(token);

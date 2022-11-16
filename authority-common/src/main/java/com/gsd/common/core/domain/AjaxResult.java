@@ -33,6 +33,10 @@ public class AjaxResult extends HashMap<String, Object>{
         return AjaxResult.success("操作成功", data);
     }
 
+    public static AjaxResult success(int code, String msg) {
+        return new AjaxResult(code, msg, null);
+    }
+
     public static AjaxResult success(String msg, Object data)
     {
         return new AjaxResult(HttpStatus.SUCCESS, msg, data);
