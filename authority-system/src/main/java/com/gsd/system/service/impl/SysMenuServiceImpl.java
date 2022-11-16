@@ -1,5 +1,6 @@
 package com.gsd.system.service.impl;
 
+import com.gsd.common.constant.UserConstants;
 import com.gsd.common.core.domain.entity.SysMenu;
 import com.gsd.common.utils.SecurityUtils;
 import com.gsd.common.utils.StringUtils;
@@ -98,6 +99,10 @@ public class SysMenuServiceImpl implements ISysMenuService{
     }
 
     public String getComponent(SysMenu menu) {
-        return menu.getComponent();
+        String component = UserConstants.LAYOUT;
+        if(StringUtils.isNotEmpty(menu.getComponent())) {
+            component = menu.getComponent();
+        }
+        return component;
     }
 }
