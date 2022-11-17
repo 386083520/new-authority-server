@@ -8,4 +8,6 @@ public interface SysMenuMapper {
     public List<String> selectMenuPermsByUserId(Long userId);
 
     public List<SysMenu> selectMenuTreeAll();
+
+    public List<SysMenu> selectMenuTreeByUserId(long userId);
 }

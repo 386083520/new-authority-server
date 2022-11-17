@@ -33,6 +33,8 @@ public class SysMenuServiceImpl implements ISysMenuService{
         List<SysMenu> menus = null;
         if(SecurityUtils.isAdmin(userId)) {
             menus = menuMapper.selectMenuTreeAll();
+        }else {
+            menus = menuMapper.selectMenuTreeByUserId(userId);
         }
         return getChildPerms(menus, 0);
     }
